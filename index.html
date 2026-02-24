@@ -87,6 +87,38 @@ body {
     100%{text-shadow:2px 2px #ff00ff,-2px -2px #00ffff;}
 }
 
+/* GLITCH BURST */
+.glitch-burst {
+    animation: glitchBurst 0.35s linear;
+}
+
+@keyframes glitchBurst {
+    0% {
+        transform: translate(0);
+        text-shadow: 4px 4px #ff00ff, -4px -4px #00ffff;
+    }
+    20% {
+        transform: translate(-3px, 2px);
+        text-shadow: -6px 4px #ff00ff, 6px -4px #00ffff;
+    }
+    40% {
+        transform: translate(3px, -2px);
+        text-shadow: 6px -4px #ff00ff, -6px 4px #00ffff;
+    }
+    60% {
+        transform: translate(-2px, -3px);
+        text-shadow: -4px -6px #ff00ff, 4px 6px #00ffff;
+    }
+    80% {
+        transform: translate(2px, 3px);
+        text-shadow: 6px 6px #ff00ff, -6px -6px #00ffff;
+    }
+    100% {
+        transform: translate(0);
+        text-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff;
+    }
+}
+
 /* ===== TABS ===== */
 .tabs{
     margin-top:30px;
@@ -188,7 +220,7 @@ body {
 
 <div id="mainSection">
 
-    <h1 class="glitch" onclick="resetLayout()">ZZ.Series</h1>
+    <h1 class="glitch" id="mainTitle" onclick="resetLayout()">ZZ.Series</h1>
 
     <div class="tabs">
         <button class="tab-button" onclick="showVideo(1)">Part 1</button>
@@ -217,9 +249,9 @@ function checkPin(){
 /* VIDEO SWITCH */
 function showVideo(part){
 
-    const flash=document.getElementById("flash");
+    const flash = document.getElementById("flash");
     flash.classList.add("active");
-    setTimeout(()=>flash.classList.remove("active"),200);
+    setTimeout(() => flash.classList.remove("active"), 200);
 
     const videos = {
         1: "https://pornve.com/embed/468144",
@@ -228,24 +260,55 @@ function showVideo(part){
         4: "https://pornve.com/embed/471129"
     };
 
-    document.getElementById("videoArea").style.display="block";
-    document.getElementById("videoArea").innerHTML=
+    // Change title
+    document.getElementById("mainTitle").innerText =
+        "ZZ.Series Wet Hot Indian Wedding";
+
+    triggerGlitchBurst();
+
+    // Show video
+    document.getElementById("videoArea").style.display = "block";
+    document.getElementById("videoArea").innerHTML =
         `<iframe src="${videos[part]}" allowfullscreen></iframe>`;
 
+    // Shift layout upward
     document.getElementById("mainSection").classList.add("top-mode");
 
-    document.querySelectorAll(".tab-button").forEach(btn=>btn.classList.remove("active"));
-    document.querySelectorAll(".tab-button")[part-1].classList.add("active");
+    // Activate tab
+    document.querySelectorAll(".tab-button")
+        .forEach(btn => btn.classList.remove("active"));
+    document.querySelectorAll(".tab-button")[part-1]
+        .classList.add("active");
 }
 
 function resetLayout(){
 
-    document.getElementById("videoArea").style.display="none";
-    document.getElementById("videoArea").innerHTML="";
-    document.getElementById("mainSection").classList.remove("top-mode");
+    // Restore title
+    document.getElementById("mainTitle").innerText = "ZZ.Series";
 
+    triggerGlitchBurst();
+
+    // Hide video
+    document.getElementById("videoArea").style.display = "none";
+    document.getElementById("videoArea").innerHTML = "";
+
+    // Remove top mode
+    document.getElementById("mainSection")
+        .classList.remove("top-mode");
+
+    // Remove active tab
     document.querySelectorAll(".tab-button")
-        .forEach(btn=>btn.classList.remove("active"));
+        .forEach(btn => btn.classList.remove("active"));
+}
+
+// Burst Trigger Function
+function triggerGlitchBurst() {
+    const title = document.getElementById("mainTitle");
+    title.classList.add("glitch-burst");
+
+    setTimeout(() => {
+        title.classList.remove("glitch-burst");
+    }, 350);
 }
 
 </script>
