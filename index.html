@@ -6,7 +6,7 @@
     <style>
         body {
             background-color: #0d0d0d;
-            color: #ffffff;
+            color: white;
             font-family: Arial, sans-serif;
             text-align: center;
             margin: 0;
@@ -15,17 +15,33 @@
 
         h1 {
             padding: 30px 10px 10px 10px;
-            font-size: 28px;
         }
 
-        h2 {
-            margin-top: 40px;
-            font-weight: normal;
+        .tabs {
+            margin: 20px 0;
+        }
+
+        .tab-button {
+            background: none;
+            border: none;
             color: #bbbbbb;
+            font-size: 18px;
+            margin: 0 15px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .tab-button:hover {
+            color: white;
+        }
+
+        .tab-button.active {
+            color: #ff4444;
+            font-weight: bold;
         }
 
         .video-container {
-            margin: 20px auto 50px auto;
+            margin-top: 30px;
         }
 
         iframe {
@@ -40,25 +56,37 @@
 
 <h1>ZZ.Series Wet Hot Indian Wedding</h1>
 
-<h2>Part 1</h2>
-<div class="video-container">
+<div class="tabs">
+    <button class="tab-button active" onclick="showVideo(1)">Part 1</button> |
+    <button class="tab-button" onclick="showVideo(2)">Part 2</button> |
+    <button class="tab-button" onclick="showVideo(3)">Part 3</button> |
+    <button class="tab-button" onclick="showVideo(4)">Part 4</button>
+</div>
+
+<div class="video-container" id="video-area">
     <iframe width="852" height="480" src="https://pornve.com/embed/468144" frameborder="0" allowfullscreen></iframe>
 </div>
 
-<h2>Part 2</h2>
-<div class="video-container">
-    <iframe width="852" height="480" src="https://pornve.com/embed/468915" frameborder="0" allowfullscreen></iframe>
-</div>
+<script>
+    function showVideo(part) {
+        const videoArea = document.getElementById("video-area");
+        const buttons = document.querySelectorAll(".tab-button");
 
-<h2>Part 3</h2>
-<div class="video-container">
-    <iframe width="852" height="480" src="https://pornve.com/embed/470007" frameborder="0" allowfullscreen></iframe>
-</div>
+        buttons.forEach(btn => btn.classList.remove("active"));
+        buttons[part - 1].classList.add("active");
 
-<h2>Part 4</h2>
-<div class="video-container">
-    <iframe width="852" height="480" src="https://pornve.com/embed/471129" frameborder="0" allowfullscreen></iframe>
-</div>
+        const videos = {
+            1: "https://pornve.com/embed/468144",
+            2: "https://pornve.com/embed/468915",
+            3: "https://pornve.com/embed/470007",
+            4: "https://pornve.com/embed/471129"
+        };
+
+        videoArea.innerHTML = `
+            <iframe width="852" height="480" src="${videos[part]}" frameborder="0" allowfullscreen></iframe>
+        `;
+    }
+</script>
 
 </body>
 </html>
