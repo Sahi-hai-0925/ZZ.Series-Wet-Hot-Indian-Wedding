@@ -1,20 +1,51 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>ZZ.Series Wet Hot Indian Wedding</title>
+    <title>ZZ.Series</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
         body {
-            background-color: #0d0d0d;
+            background: #0a0a0a;
             color: white;
             font-family: Arial, sans-serif;
             text-align: center;
             margin: 0;
-            padding: 0;
+        }
+
+        /* Password Screen */
+        #password-screen {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        #password-screen input {
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+        }
+
+        #password-screen button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            background: #ff00ff;
+            color: white;
+            border-radius: 5px;
         }
 
         h1 {
-            padding: 30px 10px 10px 10px;
+            padding: 30px 10px;
+            text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff;
         }
 
         .tabs {
@@ -24,50 +55,79 @@
         .tab-button {
             background: none;
             border: none;
-            color: #bbbbbb;
+            color: #aaa;
             font-size: 18px;
-            margin: 0 15px;
+            margin: 0 10px;
             cursor: pointer;
             transition: 0.3s;
         }
 
-        .tab-button:hover {
-            color: white;
-        }
-
         .tab-button.active {
-            color: #ff4444;
-            font-weight: bold;
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff;
         }
 
         .video-container {
-            margin-top: 30px;
+            margin: 20px auto;
+            max-width: 900px;
+            opacity: 1;
+            transition: opacity 0.4s ease-in-out;
+        }
+
+        .fade-out {
+            opacity: 0;
         }
 
         iframe {
-            max-width: 95%;
+            width: 100%;
+            aspect-ratio: 16/9;
             border-radius: 12px;
-            box-shadow: 0 0 25px rgba(255,255,255,0.15);
+            box-shadow: 0 0 25px #00ffff;
+        }
+
+        #main-content {
+            display: none;
         }
     </style>
 </head>
 
 <body>
 
-<h1>ZZ.Series Wet Hot Indian Wedding</h1>
-
-<div class="tabs">
-    <button class="tab-button active" onclick="showVideo(1)">Part 1</button> |
-    <button class="tab-button" onclick="showVideo(2)">Part 2</button> |
-    <button class="tab-button" onclick="showVideo(3)">Part 3</button> |
-    <button class="tab-button" onclick="showVideo(4)">Part 4</button>
+<!-- Password Screen -->
+<div id="password-screen">
+    <h2>Enter Password</h2>
+    <input type="password" id="password-input">
+    <button onclick="checkPassword()">Enter</button>
 </div>
 
-<div class="video-container" id="video-area">
-    <iframe width="852" height="480" src="https://pornve.com/embed/468144" frameborder="0" allowfullscreen></iframe>
+<div id="main-content">
+    <h1>ZZ.Series</h1>
+
+    <div class="tabs">
+        <button class="tab-button active" onclick="showVideo(1)">Part 1</button> |
+        <button class="tab-button" onclick="showVideo(2)">Part 2</button> |
+        <button class="tab-button" onclick="showVideo(3)">Part 3</button> |
+        <button class="tab-button" onclick="showVideo(4)">Part 4</button>
+    </div>
+
+    <div class="video-container" id="video-area">
+        <iframe src="https://pornve.com/embed/468144" allowfullscreen></iframe>
+    </div>
 </div>
 
 <script>
+    const correctPassword = "1234"; // change this
+
+    function checkPassword() {
+        const input = document.getElementById("password-input").value;
+        if (input === correctPassword) {
+            document.getElementById("password-screen").style.display = "none";
+            document.getElementById("main-content").style.display = "block";
+        } else {
+            alert("Wrong password");
+        }
+    }
+
     function showVideo(part) {
         const videoArea = document.getElementById("video-area");
         const buttons = document.querySelectorAll(".tab-button");
@@ -82,9 +142,12 @@
             4: "https://pornve.com/embed/471129"
         };
 
-        videoArea.innerHTML = `
-            <iframe width="852" height="480" src="${videos[part]}" frameborder="0" allowfullscreen></iframe>
-        `;
+        videoArea.classList.add("fade-out");
+
+        setTimeout(() => {
+            videoArea.innerHTML = `<iframe src="${videos[part]}" allowfullscreen></iframe>`;
+            videoArea.classList.remove("fade-out");
+        }, 300);
     }
 </script>
 
