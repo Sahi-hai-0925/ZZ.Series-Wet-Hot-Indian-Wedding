@@ -195,7 +195,7 @@ body {
 
 <div id="mainSection">
 
-    <h1 class="glitch">ZZ.Series</h1>
+    <h1 class="glitch" onclick="resetLayout()">ZZ.Series</h1>
 
     <div class="tabs">
         <button class="tab-button" onclick="showVideo(1)">Part 1</button>
@@ -232,7 +232,7 @@ function showVideo(part){
         1: "https://pornve.com/embed/468144",
         2: "https://pornve.com/embed/468915",
         3: "https://pornve.com/embed/470007",
-        4: "https://pornve.com/embed/471130"
+        4: "https://pornve.com/embed/4711"
     };
 
     document.getElementById("videoArea").style.display="block";
@@ -243,6 +243,16 @@ function showVideo(part){
 
     document.querySelectorAll(".tab-button").forEach(btn=>btn.classList.remove("active"));
     document.querySelectorAll(".tab-button")[part-1].classList.add("active");
+}
+
+function resetLayout(){
+
+    document.getElementById("videoArea").style.display="none";
+    document.getElementById("videoArea").innerHTML="";
+    document.getElementById("mainSection").classList.remove("top-mode");
+
+    document.querySelectorAll(".tab-button")
+        .forEach(btn=>btn.classList.remove("active"));
 }
 
 </script>
