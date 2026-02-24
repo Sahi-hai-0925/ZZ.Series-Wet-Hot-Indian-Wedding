@@ -4,107 +4,189 @@
     <title>ZZ.Series</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #000000);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            color: white;
-            text-align: center;
-            overflow-x: hidden;
-        }
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #000000);
+    background-size: 400% 400%;
+    animation: gradientBG 12s ease infinite;
+    color: white;
+    text-align: center;
+    overflow-x: hidden;
+}
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+/* Animated Background */
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
 
-        /* Neon Grid Overlay */
-        body::before {
-            content: "";
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(0,255,255,0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,0,255,0.1) 1px, transparent 1px);
-            background-size: 40px 40px;
-            z-index: 0;
-            animation: moveGrid 10s linear infinite;
-        }
+/* Neon Grid */
+body::before {
+    content: "";
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-image:
+        linear-gradient(rgba(0,255,255,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,0,255,0.08) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: moveGrid 8s linear infinite;
+    z-index: 0;
+}
 
-        @keyframes moveGrid {
-            from { background-position: 0 0; }
-            to { background-position: 40px 40px; }
-        }
+@keyframes moveGrid {
+    from { background-position: 0 0; }
+    to { background-position: 50px 50px; }
+}
 
-        h1 {
-            margin-top: 40px;
-            font-size: 32px;
-            text-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff;
-            position: relative;
-            z-index: 1;
-        }
+/* Floating Particles */
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
 
-        .tabs {
-            margin: 30px 0;
-            position: relative;
-            z-index: 1;
-        }
+/* Glitch Title */
+.glitch {
+    font-size: 36px;
+    margin-top: 60px;
+    position: relative;
+    z-index: 2;
+    color: white;
+    text-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff;
+    animation: glitch 1s infinite;
+}
 
-        .tab-button {
-            background: transparent;
-            border: 2px solid #00ffff;
-            color: #00ffff;
-            padding: 10px 18px;
-            margin: 5px;
-            cursor: pointer;
-            transition: 0.3s;
-            border-radius: 6px;
-            text-shadow: 0 0 8px #00ffff;
-        }
+@keyframes glitch {
+    0% { text-shadow: 2px 2px #ff00ff, -2px -2px #00ffff; }
+    25% { text-shadow: -2px 2px #ff00ff, 2px -2px #00ffff; }
+    50% { text-shadow: 2px -2px #ff00ff, -2px 2px #00ffff; }
+    75% { text-shadow: -2px -2px #ff00ff, 2px 2px #00ffff; }
+    100% { text-shadow: 2px 2px #ff00ff, -2px -2px #00ffff; }
+}
 
-        .tab-button:hover {
-            background: #00ffff;
-            color: black;
-            box-shadow: 0 0 15px #00ffff;
-        }
+/* Hologram Glass UI */
+.tabs {
+    margin: 40px 0;
+    position: relative;
+    z-index: 2;
+}
 
-        .tab-button.active {
-            background: #ff00ff;
-            border-color: #ff00ff;
-            color: black;
-            box-shadow: 0 0 20px #ff00ff;
-        }
+.tab-button {
+    background: rgba(255,255,255,0.05);
+    border: 2px solid #00ffff;
+    color: #00ffff;
+    padding: 12px 22px;
+    margin: 6px;
+    cursor: pointer;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    transition: 0.3s;
+    text-shadow: 0 0 10px #00ffff;
+}
 
-        .video-container {
-            max-width: 900px;
-            margin: auto;
-            opacity: 1;
-            transition: opacity 0.4s ease-in-out;
-            position: relative;
-            z-index: 1;
-        }
+.tab-button:hover {
+    background: #00ffff;
+    color: black;
+    box-shadow: 0 0 20px #00ffff;
+}
 
-        .fade-out {
-            opacity: 0;
-        }
+.tab-button.active {
+    background: #ff00ff;
+    border-color: #ff00ff;
+    color: black;
+    box-shadow: 0 0 25px #ff00ff;
+}
 
-        iframe {
-            width: 100%;
-            aspect-ratio: 16/9;
-            border-radius: 12px;
-            box-shadow: 0 0 30px #00ffff;
-        }
-    </style>
+.video-container {
+    max-width: 900px;
+    margin: auto;
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+    position: relative;
+    z-index: 2;
+}
+
+.fade-out { opacity: 0; }
+
+iframe {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 15px;
+    box-shadow: 0 0 40px #00ffff;
+}
+
+/* Lightning Flash */
+.flash {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: white;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.flash.active {
+    animation: lightning 0.2s;
+}
+
+@keyframes lightning {
+    0% { opacity: 0.9; }
+    100% { opacity: 0; }
+}
+
+/* PIN Lock Screen */
+#lockScreen {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+#lockScreen input {
+    padding: 12px;
+    font-size: 18px;
+    text-align: center;
+    border-radius: 8px;
+    border: none;
+    margin-top: 15px;
+}
+
+#lockScreen button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: #ff00ff;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 8px;
+    box-shadow: 0 0 20px #ff00ff;
+}
+</style>
 </head>
 
 <body>
 
-<h1>ZZ.Series</h1>
+<div id="lockScreen">
+    <h2 style="color:#00ffff;text-shadow:0 0 15px #00ffff;">ENTER ACCESS PIN</h2>
+    <input type="password" id="pinInput" maxlength="4" placeholder="****">
+    <button onclick="checkPin()">ACCESS</button>
+</div>
+
+<div class="flash" id="flash"></div>
+<canvas id="particles"></canvas>
+
+<h1 class="glitch">ZZ.Series</h1>
 
 <div class="tabs">
     <button class="tab-button active" onclick="showVideo(1)">Part 1</button>
@@ -118,27 +200,73 @@
 </div>
 
 <script>
-    function showVideo(part) {
-        const videoArea = document.getElementById("video-area");
-        const buttons = document.querySelectorAll(".tab-button");
-
-        buttons.forEach(btn => btn.classList.remove("active"));
-        buttons[part - 1].classList.add("active");
-
-        const videos = {
-            1: "https://pornve.com/embed/468144",
-            2: "https://pornve.com/embed/468915",
-            3: "https://pornve.com/embed/470007",
-            4: "https://pornve.com/embed/471129"
-        };
-
-        videoArea.classList.add("fade-out");
-
-        setTimeout(() => {
-            videoArea.innerHTML = `<iframe src="${videos[part]}" allowfullscreen></iframe>`;
-            videoArea.classList.remove("fade-out");
-        }, 300);
+/* PIN */
+function checkPin() {
+    if (document.getElementById("pinInput").value === "1234") {
+        document.getElementById("lockScreen").style.display = "none";
+    } else {
+        alert("ACCESS DENIED");
     }
+}
+
+/* Lightning + Video Switch */
+function showVideo(part) {
+    const flash = document.getElementById("flash");
+    flash.classList.add("active");
+    setTimeout(() => flash.classList.remove("active"), 200);
+
+    const videoArea = document.getElementById("video-area");
+    const buttons = document.querySelectorAll(".tab-button");
+
+    buttons.forEach(btn => btn.classList.remove("active"));
+    buttons[part - 1].classList.add("active");
+
+    const videos = {
+        1: "https://pornve.com/embed/468144",
+        2: "https://pornve.com/embed/468915",
+        3: "https://pornve.com/embed/470007",
+        4: "https://pornve.com/embed/471129"
+    };
+
+    videoArea.classList.add("fade-out");
+    setTimeout(() => {
+        videoArea.innerHTML = `<iframe src="${videos[part]}" allowfullscreen></iframe>`;
+        videoArea.classList.remove("fade-out");
+    }, 200);
+}
+
+/* Particle Background */
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+for (let i = 0; i < 80; i++) {
+    particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        dx: (Math.random() - 0.5),
+        dy: (Math.random() - 0.5)
+    });
+}
+
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#00ffff";
+    particles.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+        ctx.fill();
+        p.x += p.dx;
+        p.y += p.dy;
+
+        if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+    });
+    requestAnimationFrame(animate);
+}
+animate();
 </script>
 
 </body>
