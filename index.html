@@ -6,72 +6,87 @@
 
     <style>
         body {
-            background: #0a0a0a;
-            color: white;
-            font-family: Arial, sans-serif;
-            text-align: center;
             margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #000000);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: white;
+            text-align: center;
+            overflow-x: hidden;
         }
 
-        /* Password Screen */
-        #password-screen {
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Neon Grid Overlay */
+        body::before {
+            content: "";
             position: fixed;
             width: 100%;
             height: 100%;
-            background: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
+            background-image: 
+                linear-gradient(rgba(0,255,255,0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,0,255,0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 0;
+            animation: moveGrid 10s linear infinite;
         }
 
-        #password-screen input {
-            padding: 10px;
-            font-size: 16px;
-            border: none;
-            outline: none;
-            border-radius: 5px;
-        }
-
-        #password-screen button {
-            margin-top: 10px;
-            padding: 10px 20px;
-            cursor: pointer;
-            border: none;
-            background: #ff00ff;
-            color: white;
-            border-radius: 5px;
+        @keyframes moveGrid {
+            from { background-position: 0 0; }
+            to { background-position: 40px 40px; }
         }
 
         h1 {
-            padding: 30px 10px;
-            text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff;
+            margin-top: 40px;
+            font-size: 32px;
+            text-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff;
+            position: relative;
+            z-index: 1;
         }
 
         .tabs {
-            margin: 20px 0;
+            margin: 30px 0;
+            position: relative;
+            z-index: 1;
         }
 
         .tab-button {
-            background: none;
-            border: none;
-            color: #aaa;
-            font-size: 18px;
-            margin: 0 10px;
+            background: transparent;
+            border: 2px solid #00ffff;
+            color: #00ffff;
+            padding: 10px 18px;
+            margin: 5px;
             cursor: pointer;
             transition: 0.3s;
+            border-radius: 6px;
+            text-shadow: 0 0 8px #00ffff;
+        }
+
+        .tab-button:hover {
+            background: #00ffff;
+            color: black;
+            box-shadow: 0 0 15px #00ffff;
         }
 
         .tab-button.active {
-            color: #00ffff;
-            text-shadow: 0 0 10px #00ffff;
+            background: #ff00ff;
+            border-color: #ff00ff;
+            color: black;
+            box-shadow: 0 0 20px #ff00ff;
         }
 
         .video-container {
-            margin: 20px auto;
             max-width: 900px;
+            margin: auto;
             opacity: 1;
             transition: opacity 0.4s ease-in-out;
+            position: relative;
+            z-index: 1;
         }
 
         .fade-out {
@@ -82,52 +97,27 @@
             width: 100%;
             aspect-ratio: 16/9;
             border-radius: 12px;
-            box-shadow: 0 0 25px #00ffff;
-        }
-
-        #main-content {
-            display: none;
+            box-shadow: 0 0 30px #00ffff;
         }
     </style>
 </head>
 
 <body>
 
-<!-- Password Screen -->
-<div id="password-screen">
-    <h2>Enter Password</h2>
-    <input type="password" id="password-input">
-    <button onclick="checkPassword()">Enter</button>
+<h1>ZZ.Series</h1>
+
+<div class="tabs">
+    <button class="tab-button active" onclick="showVideo(1)">Part 1</button>
+    <button class="tab-button" onclick="showVideo(2)">Part 2</button>
+    <button class="tab-button" onclick="showVideo(3)">Part 3</button>
+    <button class="tab-button" onclick="showVideo(4)">Part 4</button>
 </div>
 
-<div id="main-content">
-    <h1>ZZ.Series</h1>
-
-    <div class="tabs">
-        <button class="tab-button active" onclick="showVideo(1)">Part 1</button> |
-        <button class="tab-button" onclick="showVideo(2)">Part 2</button> |
-        <button class="tab-button" onclick="showVideo(3)">Part 3</button> |
-        <button class="tab-button" onclick="showVideo(4)">Part 4</button>
-    </div>
-
-    <div class="video-container" id="video-area">
-        <iframe src="https://pornve.com/embed/468144" allowfullscreen></iframe>
-    </div>
+<div class="video-container" id="video-area">
+    <iframe src="https://pornve.com/embed/468144" allowfullscreen></iframe>
 </div>
 
 <script>
-    const correctPassword = "1234"; // change this
-
-    function checkPassword() {
-        const input = document.getElementById("password-input").value;
-        if (input === correctPassword) {
-            document.getElementById("password-screen").style.display = "none";
-            document.getElementById("main-content").style.display = "block";
-        } else {
-            alert("Wrong password");
-        }
-    }
-
     function showVideo(part) {
         const videoArea = document.getElementById("video-area");
         const buttons = document.querySelectorAll(".tab-button");
